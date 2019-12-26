@@ -1,5 +1,7 @@
 package com.fast.eatgo.inter;
 
+import com.fast.eatgo.domain.MenuItem;
+import com.fast.eatgo.domain.MenuItemRepository;
 import com.fast.eatgo.domain.Restaurant;
 import com.fast.eatgo.domain.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,9 @@ public class RestaurantController {
     @Autowired
     public RestaurantRepository restaurantRepository;
 
+    @Autowired
+    private MenuItemRepository menuItemRepository;
+
     @GetMapping("")
     public List<Restaurant> list() {
         return restaurantRepository.findAll();
@@ -26,6 +31,11 @@ public class RestaurantController {
 
     @GetMapping("{id}")
     public Restaurant detail(@PathVariable Long id) {
-        return restaurantRepository.findById(id);
+        Restaurant restaurant = restaurantRepository.findById(id);
+
+        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
+        restaurant.setMenuItems(menuItems);
+
+        return restaurant;
     }
 }
