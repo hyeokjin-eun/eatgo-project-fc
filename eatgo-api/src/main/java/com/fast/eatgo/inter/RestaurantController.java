@@ -22,12 +22,6 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-
-    @Autowired
-    private MenuItemRepository menuItemRepository;
-
     @GetMapping("")
     public List<Restaurant> list() {
         return restaurantService.getRestaurants();
