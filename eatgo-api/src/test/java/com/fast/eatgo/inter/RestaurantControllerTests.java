@@ -1,5 +1,6 @@
 package com.fast.eatgo.inter;
 
+import com.fast.eatgo.application.RestaurantService;
 import com.fast.eatgo.domain.MenuItemRepository;
 import com.fast.eatgo.domain.MenuItemRepositoryImpl;
 import com.fast.eatgo.domain.RestaurantRepository;
@@ -23,6 +24,9 @@ public class RestaurantControllerTests {
 
     @Autowired
     private MockMvc mvc;
+
+    @SpyBean(RestaurantService.class)
+    private RestaurantService restaurantService;
 
     @SpyBean(RestaurantRepositoryImpl.class)
     private RestaurantRepository restaurantRepository;

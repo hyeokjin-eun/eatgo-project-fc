@@ -1,5 +1,6 @@
 package com.fast.eatgo.inter;
 
+import com.fast.eatgo.application.RestaurantService;
 import com.fast.eatgo.domain.MenuItem;
 import com.fast.eatgo.domain.MenuItemRepository;
 import com.fast.eatgo.domain.Restaurant;
@@ -19,23 +20,21 @@ import java.util.List;
 public class RestaurantController {
 
     @Autowired
-    public RestaurantRepository restaurantRepository;
+    private RestaurantService restaurantService;
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     @Autowired
     private MenuItemRepository menuItemRepository;
 
     @GetMapping("")
     public List<Restaurant> list() {
-        return restaurantRepository.findAll();
+        return restaurantService.getRestaurants();
     }
 
     @GetMapping("{id}")
     public Restaurant detail(@PathVariable Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id);
-
-        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-        restaurant.setMenuItems(menuItems);
-
-        return restaurant;
+        return restaurantService.getRestaurant(id);
     }
 }

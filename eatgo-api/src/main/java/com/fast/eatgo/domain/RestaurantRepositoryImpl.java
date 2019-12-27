@@ -10,7 +10,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
     private List<Restaurant> restaurants = new ArrayList<>();
 
-    private RestaurantRepositoryImpl() {
+    public RestaurantRepositoryImpl() {
         restaurants.add(Restaurant.builder().id(1004L).name("Bob zip").address("Seoul").build());
         restaurants.add(Restaurant.builder().id(2020L).name("pizza zip").address("Seoul").build());
     }
