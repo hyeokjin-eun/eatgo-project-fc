@@ -1,11 +1,13 @@
 package com.fast.eatgo.application;
 
-import com.fast.eatgo.domain.*;
+import com.fast.eatgo.domain.MenuItem;
+import com.fast.eatgo.domain.MenuItemRepository;
+import com.fast.eatgo.domain.Restaurant;
+import com.fast.eatgo.domain.RestaurantRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;

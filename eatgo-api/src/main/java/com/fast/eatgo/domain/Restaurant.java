@@ -1,6 +1,5 @@
 package com.fast.eatgo.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-
 public class Restaurant {
 
     private Long id;
@@ -24,6 +22,9 @@ public class Restaurant {
         this.id = id;
         this.name = name;
         this.address = address;
+    }
+
+    public Restaurant() {
     }
 
     public Object getInformation() {

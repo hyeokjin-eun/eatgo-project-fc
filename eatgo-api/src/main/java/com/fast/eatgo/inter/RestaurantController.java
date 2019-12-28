@@ -7,11 +7,12 @@ import com.fast.eatgo.domain.Restaurant;
 import com.fast.eatgo.domain.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Slf4j
@@ -31,4 +32,22 @@ public class RestaurantController {
     public Restaurant detail(@PathVariable Long id) {
         return restaurantService.getRestaurant(id);
     }
+
+    @PostMapping("")
+    public ResponseEntity<?> create(@RequestBody Restaurant resource) throws URISyntaxException {
+        String name = resource.getName();
+        String address = resource.getAddress();
+
+        Restaurant restaurant = Restaurant.builder()
+                .id(1234L)
+                .name(name)
+                .address(address)
+                .build();
+
+        restaurantService.addRestaurant(restaurant);
+
+        URI uri = new URI("/restaurant/" + restaurant.getId());
+        return ResponseEntity.created(uri).body("{}");
+    }
 }
+
