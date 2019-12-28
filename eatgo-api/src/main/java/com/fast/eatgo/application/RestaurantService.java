@@ -33,7 +33,7 @@ public class RestaurantService {
         return restaurantRepository.findAll();
     }
 
-    public void addRestaurant(Restaurant restaurant) {
-
+    public Restaurant addRestaurant(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
     }
 }
