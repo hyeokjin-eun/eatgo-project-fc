@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -49,7 +50,7 @@ public class RestaurantServiceTest {
 
         mockMenuItemRepository();
 
-        given(restaurantRepository.findById(1004L)).willReturn(restaurant);
+        given(restaurantRepository.findById(1004L)).willReturn(Optional.ofNullable(restaurant));
     }
 
     private void mockMenuItemRepository() {
@@ -76,6 +77,7 @@ public class RestaurantServiceTest {
 
     @Test
     public void addRestaurant() {
+        // TODO: create 시 id 값이 null 로 넘어옴 해결 필요
         Restaurant restaurant = Restaurant.builder()
                 .name("BeRyong")
                 .address("Bosan")
@@ -89,7 +91,8 @@ public class RestaurantServiceTest {
 
         given(restaurantRepository.save(any())).willReturn(saved);
 
-        Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
+        Restaurant newRestaurant = restaurantService.addRestaurant(saved);
+
 
         assertThat(newRestaurant.getId(), is(1234L));
     }

@@ -1,16 +1,12 @@
 package com.fast.eatgo.inter;
 
 import com.fast.eatgo.application.RestaurantService;
-import com.fast.eatgo.domain.MenuItem;
-import com.fast.eatgo.domain.MenuItemRepository;
 import com.fast.eatgo.domain.Restaurant;
-import com.fast.eatgo.domain.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -39,7 +35,6 @@ public class RestaurantController {
         String address = resource.getAddress();
 
         Restaurant restaurant = Restaurant.builder()
-                .id(1234L)
                 .name(name)
                 .address(address)
                 .build();

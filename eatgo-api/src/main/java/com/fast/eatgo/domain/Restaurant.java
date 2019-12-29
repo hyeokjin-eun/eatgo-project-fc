@@ -1,22 +1,28 @@
 package com.fast.eatgo.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
 public class Restaurant {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
 
     private String address;
 
+    @Transient
     private List<MenuItem> menuItems = new ArrayList<>();
 
     @Builder
