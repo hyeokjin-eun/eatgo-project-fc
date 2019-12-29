@@ -84,6 +84,7 @@ public class RestaurantServiceTest {
                 .build();
 
         Restaurant saved = Restaurant.builder()
+                .id(1234L)
                 .name("BeRyong")
                 .address("Bosan")
                 .build();
@@ -91,8 +92,7 @@ public class RestaurantServiceTest {
 
         given(restaurantRepository.save(any())).willReturn(saved);
 
-        Restaurant newRestaurant = restaurantService.addRestaurant(saved);
-
+        Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
 
         assertThat(newRestaurant.getId(), is(1234L));
     }
