@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/restaurant")
 public class RestaurantController {
