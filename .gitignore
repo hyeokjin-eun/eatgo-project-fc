@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### node _modules
+/eatgo-web/node_modules

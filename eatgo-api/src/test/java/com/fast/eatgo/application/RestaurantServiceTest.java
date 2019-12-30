@@ -96,4 +96,19 @@ public class RestaurantServiceTest {
 
         assertThat(newRestaurant.getId(), is(1234L));
     }
+
+    @Test
+    public void update() {
+
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("Bob zip")
+                .address("Seoul")
+                .build();
+
+        given(restaurantRepository.findById(1004L)).willReturn(Optional.of( restaurant));
+        Restaurant updated = restaurantService.updateRestaurant(1004L, "Sool zip", "Busan");
+
+        assertThat(updated.getName(), is("Sool zip"));
+    }
 }
