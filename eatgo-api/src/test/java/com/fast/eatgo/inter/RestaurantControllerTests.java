@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -66,7 +65,7 @@ public class RestaurantControllerTests {
     }
 
     @Test
-    public void create() throws Exception {
+    public void createWithValidData() throws Exception {
         given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
             return Restaurant.builder()
@@ -87,12 +86,29 @@ public class RestaurantControllerTests {
     }
 
     @Test
-    public void update() throws Exception {
+    public void createWithInvalidData() throws Exception {
+        mvc.perform(post("/restaurant")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"\",\"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurant/1004")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"JOKER\",\"address\":\"Busan\"}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L, "JOKER", "Busan");
+    }
+
+
+    @Test
+    public void updateWithInvalidData() throws Exception {
+        mvc.perform(patch("/restaurant/1004")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"\",\"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
     }
 }
