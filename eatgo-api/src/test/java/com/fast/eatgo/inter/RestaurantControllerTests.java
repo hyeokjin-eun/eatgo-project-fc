@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -52,9 +54,7 @@ public class RestaurantControllerTests {
                 .address("Seoul")
                 .build();
 
-        List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(MenuItem.builder().name("kimchi").build());
-        restaurant.setMenuItems(menuItems);
+        restaurant.setMenuItems(Arrays.asList(MenuItem.builder().name("kimchi").build()));
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
@@ -67,11 +67,20 @@ public class RestaurantControllerTests {
 
     @Test
     public void create() throws Exception {
+        given(restaurantService.addRestaurant(any())).will(invocation -> {
+            Restaurant restaurant = invocation.getArgument(0);
+            return Restaurant.builder()
+                    .id(1234L)
+                    .name(restaurant.getName())
+                    .address(restaurant.getAddress())
+                    .build();
+        });
+
         mvc.perform(post("/restaurant")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"BeRyong\",\"address\":\"Bosan\"}"))
+                .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "/restaurant/1"))
+                .andExpect(header().string("location", "/restaurant/1234"))
                 .andExpect(content().string("{}"));
 
         verify(restaurantService).addRestaurant(any());

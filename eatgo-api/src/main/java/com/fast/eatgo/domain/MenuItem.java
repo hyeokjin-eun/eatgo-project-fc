@@ -1,15 +1,16 @@
 package com.fast.eatgo.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MenuItem {
 
     @Id
@@ -19,13 +20,4 @@ public class MenuItem {
     private Long restaurantId;
 
     private String name;
-
-    @Builder
-    public MenuItem(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

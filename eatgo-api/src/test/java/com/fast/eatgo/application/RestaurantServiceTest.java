@@ -77,20 +77,20 @@ public class RestaurantServiceTest {
 
     @Test
     public void addRestaurant() {
-        // TODO: create 시 id 값이 null 로 넘어옴 해결 필요
+
+        given(restaurantRepository.save(any())).will(invocation -> {
+            Restaurant restaurant = invocation.getArgument(0);
+            return Restaurant.builder()
+                    .id(1234L)
+                    .name(restaurant.getName())
+                    .address(restaurant.getAddress())
+                    .build();
+        });
+
         Restaurant restaurant = Restaurant.builder()
                 .name("BeRyong")
                 .address("Bosan")
                 .build();
-
-        Restaurant saved = Restaurant.builder()
-                .id(1234L)
-                .name("BeRyong")
-                .address("Bosan")
-                .build();
-
-
-        given(restaurantRepository.save(any())).willReturn(saved);
 
         Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
 
