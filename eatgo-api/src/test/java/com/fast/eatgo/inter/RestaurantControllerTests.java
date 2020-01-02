@@ -4,6 +4,7 @@ import com.fast.eatgo.application.RestaurantService;
 import com.fast.eatgo.domain.MenuItem;
 import com.fast.eatgo.domain.Restaurant;
 import com.fast.eatgo.domain.RestaurantNotFoundException;
+import com.fast.eatgo.domain.Review;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,19 @@ public class RestaurantControllerTests {
                 .address("Seoul")
                 .build();
 
-        restaurant.setMenuItems(Arrays.asList(MenuItem.builder().name("kimchi").build()));
+        MenuItem menuItem = MenuItem.builder()
+                .name("kimchi")
+                .build();
+
+        Review review = Review.builder()
+                .id(1L)
+                .name("JOKER")
+                .score(3)
+                .description("Good")
+                .build();
+
+        restaurant.setMenuItems(Arrays.asList(menuItem));
+        restaurant.setReviews(Arrays.asList(review));
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
@@ -62,7 +75,8 @@ public class RestaurantControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1004")))
                 .andExpect(content().string(containsString("\"name\":\"Bob zip\"")))
-                .andExpect(content().string(containsString("kimchi")));
+                .andExpect(content().string(containsString("kimchi")))
+                .andExpect(content().string(containsString("Good")));
     }
 
     @Test

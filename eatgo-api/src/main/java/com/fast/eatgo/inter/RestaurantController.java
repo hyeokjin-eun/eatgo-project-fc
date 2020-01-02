@@ -42,7 +42,7 @@ public class RestaurantController {
                 .address(resource.getAddress())
                 .build();
 
-        restaurantService.addRestaurant(restaurant);
+        restaurant = restaurantService.addRestaurant(restaurant);
 
         URI uri = new URI("/restaurant/" + restaurant.getId());
         return ResponseEntity.created(uri).body("{}");

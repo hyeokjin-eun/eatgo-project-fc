@@ -33,12 +33,20 @@ public class Restaurant {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<MenuItem> menuItems;
 
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<Review> reviews;
+
     public Object getInformation() {
         return name + " In " + address;
     }
 
     public void setMenuItems(List<MenuItem> menuItems) {
         this.menuItems = new ArrayList<>(menuItems);
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = new ArrayList<>(reviews);
     }
 
     public void updateInformation(String name, String address) {
