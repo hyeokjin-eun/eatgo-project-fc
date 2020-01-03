@@ -2,7 +2,6 @@ package com.fast.eatgo.application;
 
 import com.fast.eatgo.domain.MenuItem;
 import com.fast.eatgo.domain.MenuItemRepository;
-import com.fast.eatgo.domain.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
