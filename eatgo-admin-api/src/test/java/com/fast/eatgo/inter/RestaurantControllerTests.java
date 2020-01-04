@@ -55,28 +55,12 @@ public class RestaurantControllerTests {
                 .address("Seoul")
                 .build();
 
-        MenuItem menuItem = MenuItem.builder()
-                .name("kimchi")
-                .build();
-
-        Review review = Review.builder()
-                .id(1L)
-                .name("JOKER")
-                .score(3)
-                .description("Good")
-                .build();
-
-        restaurant.setMenuItems(Arrays.asList(menuItem));
-        restaurant.setReviews(Arrays.asList(review));
-
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurant/1004"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1004")))
-                .andExpect(content().string(containsString("\"name\":\"Bob zip\"")))
-                .andExpect(content().string(containsString("kimchi")))
-                .andExpect(content().string(containsString("Good")));
+                .andExpect(content().string(containsString("\"name\":\"Bob zip\"")));
     }
 
     @Test
