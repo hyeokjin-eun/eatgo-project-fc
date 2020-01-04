@@ -12,7 +12,6 @@ import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -92,42 +91,5 @@ public class RestaurantServiceTest {
     @Test(expected = RestaurantNotFoundException.class)
     public void getRestaurantWithNotExisted() {
         restaurantService.getRestaurant(404L);
-    }
-
-    @Test
-    public void addRestaurant() {
-
-        given(restaurantRepository.save(any())).will(invocation -> {
-            Restaurant restaurant = invocation.getArgument(0);
-            return Restaurant.builder()
-                    .id(1234L)
-                    .name(restaurant.getName())
-                    .address(restaurant.getAddress())
-                    .build();
-        });
-
-        Restaurant restaurant = Restaurant.builder()
-                .name("BeRyong")
-                .address("Bosan")
-                .build();
-
-        Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
-
-        assertThat(newRestaurant.getId(), is(1234L));
-    }
-
-    @Test
-    public void update() {
-
-        Restaurant restaurant = Restaurant.builder()
-                .id(1004L)
-                .name("Bob zip")
-                .address("Seoul")
-                .build();
-
-        given(restaurantRepository.findById(1004L)).willReturn(Optional.of( restaurant));
-        Restaurant updated = restaurantService.updateRestaurant(1004L, "Sool zip", "Busan");
-
-        assertThat(updated.getName(), is("Sool zip"));
     }
 }
