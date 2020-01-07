@@ -3,11 +3,10 @@ package com.fast.eatgo.inter;
 import com.fast.eatgo.application.RegionService;
 import com.fast.eatgo.domain.Region;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController

@@ -1,10 +1,8 @@
 package com.fast.eatgo.inter;
 
 import com.fast.eatgo.application.RestaurantService;
-import com.fast.eatgo.domain.MenuItem;
 import com.fast.eatgo.domain.Restaurant;
 import com.fast.eatgo.domain.RestaurantNotFoundException;
-import com.fast.eatgo.domain.Review;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;

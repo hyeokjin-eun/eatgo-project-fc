@@ -1,9 +1,7 @@
 package com.fast.eatgo.inter;
 
 import com.fast.eatgo.application.CategoryService;
-import com.fast.eatgo.application.RegionService;
 import com.fast.eatgo.domain.Category;
-import com.fast.eatgo.domain.Region;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,8 @@
 package com.fast.eatgo.application;
 
-import com.fast.eatgo.domain.*;
+import com.fast.eatgo.domain.Restaurant;
+import com.fast.eatgo.domain.RestaurantNotFoundException;
+import com.fast.eatgo.domain.RestaurantRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,9 +15,7 @@ import java.util.Optional;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 public class RestaurantServiceTest {
 

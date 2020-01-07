@@ -2,8 +2,6 @@ package com.fast.eatgo.application;
 
 import com.fast.eatgo.domain.Category;
 import com.fast.eatgo.domain.CategoryRepository;
-import com.fast.eatgo.domain.Region;
-import com.fast.eatgo.domain.RegionRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
