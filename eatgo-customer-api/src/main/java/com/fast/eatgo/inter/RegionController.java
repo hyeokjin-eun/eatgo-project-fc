@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,12 +24,5 @@ public class RegionController {
     @GetMapping("")
     public List<Region> list() {
         return regionService.getRegions();
-    }
-
-    @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody Region resource) throws URISyntaxException {
-        Region region = regionService.addRegion(resource.getName());
-        String url = "/region/" + region.getId();
-        return ResponseEntity.created(new URI(url)).body("{}");
     }
 }

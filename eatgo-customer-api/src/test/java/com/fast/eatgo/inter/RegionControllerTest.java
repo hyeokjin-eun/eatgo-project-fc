@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,22 +43,5 @@ public class RegionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Seoul")));
 
-    }
-
-    @Test
-    public void create() throws Exception {
-        Region mockRegion = Region.builder()
-                .name("Seoul")
-                .build();
-
-        given(regionService.addRegion("Seoul")).willReturn(mockRegion);
-
-        mvc.perform(post("/region")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Seoul\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(content().string(containsString("{}")));
-
-        verify(regionService).addRegion("Seoul");
     }
 }
