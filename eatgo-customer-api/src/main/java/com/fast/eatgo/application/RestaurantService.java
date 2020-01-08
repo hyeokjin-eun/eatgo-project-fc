@@ -32,7 +32,9 @@ public class RestaurantService {
         return restaurant;
     }
 
-    public List<Restaurant> getRestaurants() {
-        return restaurantRepository.findAll();
+    public List<Restaurant> getRestaurants(String region) {
+        // TODO: 2020-01-08 Region 필터링
+        List<Restaurant> restaurants = restaurantRepository.findAllByAddressContaining(region);
+        return restaurants;
     }
 }

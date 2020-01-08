@@ -22,8 +22,8 @@ public class RestaurantController {
     }
 
     @GetMapping("")
-    public List<Restaurant> list() {
-        return restaurantService.getRestaurants();
+    public List<Restaurant> list(@RequestParam("region")  String region) {
+        return restaurantService.getRestaurants(region);
     }
 
     @GetMapping("{id}")
