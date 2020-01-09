@@ -38,11 +38,11 @@ public class RestaurantServiceTest {
 
     private void mockRestaurantRepository() {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(Restaurant.builder().id(1004L).name("Bob zip").address("Seoul").build());
-        given(restaurantRepository.findAllByAddressContaining("Seoul")).willReturn(restaurants);
+        restaurants.add(Restaurant.builder().id(1004L).categoryId(1L).name("Bob zip").address("Seoul").build());
 
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("Seoul")
                 .build();
@@ -50,7 +50,11 @@ public class RestaurantServiceTest {
         mockMenuItemRepository();
         mockReviewRepository();
 
-        given(restaurantRepository.findById(1004L)).willReturn(Optional.ofNullable(restaurant));
+        given(restaurantRepository.findAllByAddressContainingAndCategoryId("Seoul", 1L))
+                .willReturn(restaurants);
+
+        given(restaurantRepository.findById(1004L))
+                .willReturn(Optional.ofNullable(restaurant));
     }
 
     private void mockMenuItemRepository() {
@@ -68,7 +72,8 @@ public class RestaurantServiceTest {
     @Test
     public void getRestaurants() {
         String region = "Seoul";
-        List<Restaurant> restaurants = restaurantService.getRestaurants(region);
+        Long categoryId = 1L;
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region, categoryId);
         Restaurant restaurant = restaurants.get(0);
         assertThat(restaurant.getId(), is(1004L));
     }

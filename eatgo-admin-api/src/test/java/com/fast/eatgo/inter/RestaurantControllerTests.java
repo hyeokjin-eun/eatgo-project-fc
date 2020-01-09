@@ -35,7 +35,7 @@ public class RestaurantControllerTests {
     @Test
     public void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(Restaurant.builder().id(1004L).name("Bob zip").address("Seoul").build());
+        restaurants.add(Restaurant.builder().id(1004L).categoryId(1L).name("Bob zip").address("Seoul").build());
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
         mvc.perform(get("/restaurant"))
@@ -48,6 +48,7 @@ public class RestaurantControllerTests {
     public void detailWithExisted() throws Exception {
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("Seoul")
                 .build();
@@ -75,6 +76,7 @@ public class RestaurantControllerTests {
             Restaurant restaurant = invocation.getArgument(0);
             return Restaurant.builder()
                     .id(1234L)
+                    .categoryId(restaurant.getCategoryId())
                     .name(restaurant.getName())
                     .address(restaurant.getAddress())
                     .build();
@@ -82,7 +84,7 @@ public class RestaurantControllerTests {
 
         mvc.perform(post("/restaurant")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}"))
+                .content("{\"categoryId\":1,\"name\":\"BeRyong\",\"address\":\"Busan\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/restaurant/1234"))
                 .andExpect(content().string("{}"));
@@ -102,7 +104,7 @@ public class RestaurantControllerTests {
     public void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurant/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"JOKER\",\"address\":\"Busan\"}"))
+                .content("{\"categoryId\":1,\"name\":\"JOKER\",\"address\":\"Busan\"}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L, "JOKER", "Busan");

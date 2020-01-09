@@ -33,11 +33,12 @@ public class RestaurantServiceTest {
 
     private void mockRestaurantRepository() {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(Restaurant.builder().id(1004L).name("Bob zip").address("Seoul").build());
+        restaurants.add(Restaurant.builder().id(1004L).categoryId(1L).name("Bob zip").address("Seoul").build());
         given(restaurantRepository.findAll()).willReturn(restaurants);
 
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("Seoul")
                 .build();
