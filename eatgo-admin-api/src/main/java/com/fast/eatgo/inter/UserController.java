@@ -1,12 +1,15 @@
 package com.fast.eatgo.inter;
 
+import ch.qos.logback.classic.spi.TurboFilterList;
 import com.fast.eatgo.application.UserService;
 import com.fast.eatgo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 @RestController
@@ -23,6 +26,14 @@ public class UserController {
     @GetMapping("")
     public List<User> list() {
         return userService.getUsers();
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> create(@RequestBody User resource) throws URISyntaxException {
+        User user = userService.addUser(resource);
+
+        URI uri = new URI("/user/" + user.getId());
+        return ResponseEntity.created(uri).body("{}");
     }
 }
 

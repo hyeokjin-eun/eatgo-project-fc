@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -14,8 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,5 +48,26 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("test@test.com")))
                 .andExpect(content().string(containsString("Test1")));
+    }
+
+    @Test
+    public void create() throws Exception {
+
+        User user = User.builder()
+                .email("test@test.com")
+                .name("Test1")
+                .level(1L)
+                .build();
+
+        given(userService.addUser(any())).willReturn(user);
+
+        mvc.perform(post("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test@test.com\",\"name\":\"Test1\",\"level\":1}"))
+                .andExpect(status().isCreated())
+                .andExpect(content().string(containsString("test@test.com")))
+                .andExpect(content().string(containsString("Test1")));
+
+        verify(userService).addUser(any());
     }
 }
