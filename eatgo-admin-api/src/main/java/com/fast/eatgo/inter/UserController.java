@@ -35,5 +35,10 @@ public class UserController {
         URI uri = new URI("/user/" + user.getId());
         return ResponseEntity.created(uri).body("{}");
     }
+
+    @PatchMapping("{id}")
+    public User update(@PathVariable("id") Long id, @RequestBody User resource) {
+        return userService.updateUser(id, resource);
+    }
 }
 

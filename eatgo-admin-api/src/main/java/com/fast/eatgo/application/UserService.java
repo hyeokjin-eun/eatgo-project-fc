@@ -5,6 +5,7 @@ import com.fast.eatgo.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -22,6 +23,16 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        return null;
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User updateUser(Long id, User user) {
+        return userRepository.findById(id)
+                .map(searchUser -> searchUser
+                        .setEmail(user.getEmail())
+                        .setName(user.getName())
+                        .setLevel(user.getLevel()))
+                .orElse(null);
     }
 }

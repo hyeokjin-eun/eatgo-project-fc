@@ -1,9 +1,7 @@
 package com.fast.eatgo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Accessors(chain = true)
 public class User {
 
     @Id
@@ -25,12 +24,15 @@ public class User {
 
     @Email
     @NotEmpty
+    @Setter
     private String email;
 
     @NotEmpty
+    @Setter
     private String name;
 
     @NotNull
+    @Setter
     private Long level;
 
     public boolean isAdmin() {
