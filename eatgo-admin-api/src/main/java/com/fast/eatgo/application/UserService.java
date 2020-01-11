@@ -35,4 +35,14 @@ public class UserService {
                         .setLevel(user.getLevel()))
                 .orElse(null);
     }
+
+    @Transactional
+    public User deactivateUser(Long id) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.deActive();
+                    return user;
+                })
+                .orElse(null);
+    }
 }

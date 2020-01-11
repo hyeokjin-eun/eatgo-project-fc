@@ -92,7 +92,23 @@ public class UserServiceTest {
 
         assertThat(user.getEmail(), is("test2@test.com"));
         assertThat(user.getName(), is("Test1"));
-        //verify(userRepository).save(any());
+    }
+
+    @Test
+    public void deactivateUser() {
+        given(userRepository.findById(eq(1L))).willReturn(Optional.of(User.builder()
+                .id(1L)
+                .email("test@test.com")
+                .name("Test1")
+                .level(4L)
+                .build()));
+
+        User user = userService.deactivateUser(1L);
+
+        verify(userRepository).findById(1L);
+
+        assertThat(user.isAdmin(), is(false));
+        assertThat(user.isActive(), is(false));
 
     }
 }
