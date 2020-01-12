@@ -31,6 +31,9 @@ public class User {
     @Setter
     private String name;
 
+    @Setter
+    private String password;
+
     @NotNull
     @Setter
     private Long level;
