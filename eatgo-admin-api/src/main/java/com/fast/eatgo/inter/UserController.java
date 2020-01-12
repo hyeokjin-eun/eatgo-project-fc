@@ -1,6 +1,5 @@
 package com.fast.eatgo.inter;
 
-import ch.qos.logback.classic.spi.TurboFilterList;
 import com.fast.eatgo.application.UserService;
 import com.fast.eatgo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 
 @RestController
