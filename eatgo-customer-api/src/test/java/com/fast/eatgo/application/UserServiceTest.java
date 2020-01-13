@@ -1,8 +1,6 @@
 package com.fast.eatgo.application;
 
-import com.fast.eatgo.domain.User;
-import com.fast.eatgo.domain.UserExistedException;
-import com.fast.eatgo.domain.UserRepository;
+import com.fast.eatgo.domain.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -81,4 +79,47 @@ public class UserServiceTest {
         verify(userRepository, never()).save(any());
     }
 
+    @Test
+    public void authenticateWithValidAttributes() {
+        String email = "test@test.com";
+        String password = "test";
+
+        User mockUser = User.builder()
+                .email(email)
+                .build();
+        given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
+
+        User user = userService.authenticate(email, password);
+
+        assertThat(user.getEmail(), is(email));
+    }
+
+    @Test(expected = EmailNotExistedException.class)
+    public void authenticateWithNotExistedEmail() {
+        String email = "x@test.com";
+        String password = "test";
+
+        given(userRepository.findByEmail(email)).willReturn(Optional.empty());
+
+        User user = userService.authenticate(email, password);
+
+        assertThat(user.getEmail(), is(email));
+    }
+
+    @Test(expected = PasswordWrongException.class)
+    public void authenticateWithWrongPassword() {
+        String email = "test@test.com";
+        String password = "x";
+
+        User mockUser = User.builder()
+                .email(email)
+                .password(password)
+                .build();
+
+        given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
+
+        User user = userService.authenticate(email, password);
+
+        assertThat(user.getEmail(), is(email));
+    }
 }

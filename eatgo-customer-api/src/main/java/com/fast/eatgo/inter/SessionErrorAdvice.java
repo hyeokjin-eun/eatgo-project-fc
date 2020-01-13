@@ -2,7 +2,6 @@ package com.fast.eatgo.inter;
 
 import com.fast.eatgo.domain.EmailNotExistedException;
 import com.fast.eatgo.domain.PasswordWrongException;
-import com.fast.eatgo.domain.RestaurantNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

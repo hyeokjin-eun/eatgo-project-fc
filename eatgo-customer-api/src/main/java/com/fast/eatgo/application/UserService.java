@@ -1,5 +1,6 @@
 package com.fast.eatgo.application;
 
+import com.fast.eatgo.domain.EmailNotExistedException;
 import com.fast.eatgo.domain.User;
 import com.fast.eatgo.domain.UserExistedException;
 import com.fast.eatgo.domain.UserRepository;
@@ -28,15 +29,22 @@ public class UserService {
             throw new UserExistedException(user.getEmail());
         }
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user
-                .setPassword(passwordEncoder.encode(user.getPassword()))
+                .setPassword(passwordEncoder(user.getPassword()))
                 .setLevel(1L);
+
         return userRepository.save(user);
     }
 
     public User authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new EmailNotExistedException(email));
 
-        return null;
+        passwordEncoder().matches()
+
+        return user;
+    }
+
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

@@ -42,24 +42,24 @@ public class SessionControllerTest {
     }
 
     @Test
-    public void createWithInvalidAttributes() throws Exception {
-        given(userService.authenticate(eq("test@test.com"), eq("x"))).willThrow(PasswordWrongException.class);
-
-        mvc.perform(post("/session")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"email\":\"test@test.com\",\"password\":\"x\"}"))
-                .andExpect(status().isBadRequest());
-
-        verify(userService).authenticate(eq("test@test.com"), eq("x"));
-    }
-
-    @Test
     public void createWithNotExistedEmail() throws Exception {
         given(userService.authenticate(eq("x@test.com"), eq("test"))).willThrow(EmailNotExistedException.class);
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"x@test.com\",\"password\":\"test\"}"))
+                .andExpect(status().isBadRequest());
+
+        verify(userService).authenticate(eq("x@test.com"), eq("test"));
+    }
+
+    @Test
+    public void createWithInvalidAttributes() throws Exception {
+        given(userService.authenticate(eq("test@test.com"), eq("x"))).willThrow(PasswordWrongException.class);
+
+        mvc.perform(post("/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test@test.com\",\"password\":\"x\"}"))
                 .andExpect(status().isBadRequest());
 
         verify(userService).authenticate(eq("test@test.com"), eq("x"));
