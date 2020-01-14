@@ -1,9 +1,6 @@
 package com.fast.eatgo.application;
 
-import com.fast.eatgo.domain.EmailNotExistedException;
-import com.fast.eatgo.domain.User;
-import com.fast.eatgo.domain.UserExistedException;
-import com.fast.eatgo.domain.UserRepository;
+import com.fast.eatgo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,9 +14,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -30,7 +30,7 @@ public class UserService {
         }
 
         user
-                .setPassword(passwordEncoder(user.getPassword()))
+                .setPassword(passwordEncoder.encode(user.getPassword()))
                 .setLevel(1L);
 
         return userRepository.save(user);
@@ -39,12 +39,10 @@ public class UserService {
     public User authenticate(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new EmailNotExistedException(email));
 
-        passwordEncoder().matches()
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            throw new PasswordWrongException();
+        }
 
         return user;
-    }
-
-    private PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
