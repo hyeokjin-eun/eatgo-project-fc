@@ -93,7 +93,7 @@ public class UserServiceTest {
                 .build();
         given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
 
-        given(passwordEncoder.matches(any(), any())).willReturn(true);
+        given(passwordEncoder.matches(any(), any())).willReturn(false);
 
         User user = userService.authenticate(email, password);
 
@@ -124,10 +124,8 @@ public class UserServiceTest {
 
         given(userRepository.findByEmail(email)).willReturn(Optional.ofNullable(mockUser));
 
-        given(passwordEncoder.matches(any(), any())).willReturn(false);
+        given(passwordEncoder.matches(any(), any())).willReturn(true);
 
-        User user = userService.authenticate(email, password);
-
-        assertThat(user.getEmail(), is(email));
+        User user = userService.authenticate("test@test.com", "test");
     }
 }

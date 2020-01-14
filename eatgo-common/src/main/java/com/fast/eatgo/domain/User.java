@@ -1,5 +1,7 @@
 package com.fast.eatgo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -48,5 +50,14 @@ public class User {
 
     public void deActive() {
         this.level = 0L;
+    }
+
+    @JsonIgnore
+    public String getAccessToken() {
+        if (this.password == null) {
+            return "";
+        }
+
+        return password.substring(0, 10);
     }
 }

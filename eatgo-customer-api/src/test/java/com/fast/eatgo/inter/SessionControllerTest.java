@@ -3,6 +3,7 @@ package com.fast.eatgo.inter;
 import com.fast.eatgo.application.UserService;
 import com.fast.eatgo.domain.EmailNotExistedException;
 import com.fast.eatgo.domain.PasswordWrongException;
+import com.fast.eatgo.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,16 @@ public class SessionControllerTest {
 
     @Test
     public void createWithValidAttributes() throws Exception {
+
+        String email = "test@test.com";
+        String password = "test";
+
+        User mockUser = User.builder()
+                .password("ACCESSTOKEN")
+                .build();
+
+        given(userService.authenticate(email, password)).willReturn(mockUser);
+
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"test@test.com\",\"password\":\"test\"}"))
