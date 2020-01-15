@@ -51,13 +51,4 @@ public class User {
     public void deActive() {
         this.level = 0L;
     }
-
-    @JsonIgnore
-    public String getAccessToken() {
-        if (this.password == null) {
-            return "";
-        }
-
-        return password.substring(0, 10);
-    }
 }

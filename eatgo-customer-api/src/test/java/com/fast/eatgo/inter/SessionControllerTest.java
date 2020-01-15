@@ -4,6 +4,7 @@ import com.fast.eatgo.application.UserService;
 import com.fast.eatgo.domain.EmailNotExistedException;
 import com.fast.eatgo.domain.PasswordWrongException;
 import com.fast.eatgo.domain.User;
+import com.fast.eatgo.util.JwtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -28,6 +29,9 @@ public class SessionControllerTest {
     private MockMvc mvc;
 
     @MockBean
+    private JwtUtil jwtUtil;
+
+    @MockBean
     private UserService userService;
 
     @Test
@@ -37,17 +41,22 @@ public class SessionControllerTest {
         String password = "test";
 
         User mockUser = User.builder()
+                .id(1L)
+                .name("Test1")
                 .password("ACCESSTOKEN")
                 .build();
 
         given(userService.authenticate(email, password)).willReturn(mockUser);
 
+        given(jwtUtil.createToken(1L, "Test1")).willReturn("header.payload.signature");
+
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"test@test.com\",\"password\":\"test\"}"))
                 .andExpect(status().isCreated())
-        .andExpect(header().string("location", "/session/1"))
-        .andExpect(content().string("{\"accessToken\":\"ACCESSTOKE\"}"));
+                .andExpect(header().string("location", "/session"))
+                .andExpect(content().string(containsString("{\"accessToken\":\"header.payload.signature\"}")))
+                .andExpect(content().string(containsString(".")));
 
         verify(userService).authenticate(eq("test@test.com"), eq("test"));
     }

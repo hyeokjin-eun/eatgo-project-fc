@@ -2,6 +2,7 @@ package com.fast.eatgo.inter;
 
 import com.fast.eatgo.application.UserService;
 import com.fast.eatgo.domain.User;
+import com.fast.eatgo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,12 @@ public class SessionController {
     private final UserService userService;
 
     @Autowired
-    public SessionController(UserService userService) {
+    private final JwtUtil jwtUtil;
+
+    @Autowired
+    public SessionController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("")
@@ -28,8 +33,8 @@ public class SessionController {
 
         User user = userService.authenticate(resource.getEmail(), resource.getPassword());
 
-        String accessToken = user.getAccessToken();
-        String uri = "/session/1";
+        String accessToken = jwtUtil.createToken(user.getId(), user.getName());
+        String uri = "/session";
 
         return ResponseEntity.created(new URI(uri))
                 .body(SessionResponseDto.builder()
