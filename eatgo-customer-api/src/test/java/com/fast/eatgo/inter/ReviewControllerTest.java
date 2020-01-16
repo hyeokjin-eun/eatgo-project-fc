@@ -31,7 +31,7 @@ public class ReviewControllerTest {
 
     @Test
     public void createWithValidAttribute() throws Exception {
-        given(reviewService.addReview(eq(1L), any())).willReturn(
+        given(reviewService.addReview(eq(1L), eq("JOKER"), eq(3), eq("Good"))).willReturn(
                 Review.builder()
                         .id(1L)
                         .name("JOKER")
@@ -42,12 +42,13 @@ public class ReviewControllerTest {
         );
 
         mvc.perform(post("/restaurant/1/review")
+                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJUZXN0MSJ9.YKYvqkmiv5hWdGkREOqiELSWCzMQs7ABeQXbMTkyLMw")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"JOKER\",\"score\":3,\"description\":\"Good\"}"))
+                .content("\"score\":3,\"description\":\"Good\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/restaurant/1/review/1"));
 
-        verify(reviewService).addReview(eq(1L), any());
+        verify(reviewService).addReview(any(), any(), any(), any());
     }
 
     @Test

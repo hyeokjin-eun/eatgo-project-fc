@@ -33,7 +33,7 @@ public class ReviewServiceTest {
                 .description("Good")
                 .build();
 
-        reviewService.addReview(eq(1004L), review);
+        reviewService.addReview(eq(1004L), "JOKER", 3, "Good");
 
         verify(reviewRepository).save(any());
     }

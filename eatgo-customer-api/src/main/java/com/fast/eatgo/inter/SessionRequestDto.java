@@ -1,6 +1,5 @@
 package com.fast.eatgo.inter;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

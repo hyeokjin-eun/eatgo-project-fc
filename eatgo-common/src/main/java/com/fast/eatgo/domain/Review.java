@@ -20,7 +20,6 @@ public class Review {
     @Getter
     private Long id;
 
-    @NotEmpty
     private String name;
 
     @NotNull
