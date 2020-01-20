@@ -17,7 +17,6 @@ public class Review {
 
     @Id
     @GeneratedValue
-    @Getter
     private Long id;
 
     private String name;

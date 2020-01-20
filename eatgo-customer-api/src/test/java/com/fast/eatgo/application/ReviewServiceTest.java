@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 
@@ -27,13 +28,7 @@ public class ReviewServiceTest {
 
     @Test
     public void addReview() {
-        Review review = Review.builder()
-                .name("JOKER")
-                .score(3)
-                .description("Good")
-                .build();
-
-        reviewService.addReview(eq(1004L), "JOKER", 3, "Good");
+        reviewService.addReview(1L, "JOKER", 3, "Good");
 
         verify(reviewRepository).save(any());
     }
