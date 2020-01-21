@@ -39,7 +39,8 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             return null;
         }
 
-        Claims claims = jwtUtil.getClaims(token.substring("Bearer ".length()));
+
+        io.jsonwebtoken.Claims claims = jwtUtil.getClaims(token.substring("Bearer ".length()));
         Authentication authentication = new UsernamePasswordAuthenticationToken(claims, null);
         return authentication;
     }

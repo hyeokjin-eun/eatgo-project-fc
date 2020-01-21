@@ -21,17 +21,13 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
-    public User registerUser(User user) {
-        Optional<User> opUser = userRepository.findByEmail(user.getEmail());
-        if (opUser.isPresent()) {
-            throw new UserExistedException(user.getEmail());
+    public User authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new EmailNotExistedException(email));
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            throw new PasswordWrongException();
         }
 
-        user
-                .setPassword(passwordEncoder.encode(user.getPassword()))
-                .setLevel(1L);
-
-        return userRepository.save(user);
+        return user;
     }
 }
