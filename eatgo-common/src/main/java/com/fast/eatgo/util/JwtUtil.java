@@ -1,6 +1,7 @@
 package com.fast.eatgo.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -15,10 +16,15 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String createToken(Long id, String name) {
-        String token = Jwts.builder()
+    public String createToken(Long id, String name, Long restaurantId) {
+        JwtBuilder builder = Jwts.builder()
                 .claim("userId", id)
-                .claim("name", name)
+                .claim("name", name);
+        if (restaurantId != null) {
+            builder.claim()
+        }
+
+        String token = builder
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 

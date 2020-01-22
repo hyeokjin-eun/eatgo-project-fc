@@ -48,7 +48,7 @@ public class SessionControllerTest {
 
         given(userService.authenticate(email, password)).willReturn(mockUser);
 
-        given(jwtUtil.createToken(1L, "Test1")).willReturn("header.payload.signature");
+        given(jwtUtil.createToken(1L, "Test1", user.isRestaurantOwner() ? user.getRestaurantId() : null)).willReturn("header.payload.signature");
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
