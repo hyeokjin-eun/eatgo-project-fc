@@ -1,7 +1,5 @@
 package com.fast.eatgo.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -40,6 +38,8 @@ public class User {
     @Setter
     private Long level;
 
+    private Long restaurantId;
+
     public boolean isAdmin() {
         return this.level > 3;
     }
@@ -50,5 +50,14 @@ public class User {
 
     public void deActive() {
         this.level = 0L;
+    }
+
+    public boolean isRestaurantOwner() {
+        return this.level == 50L;
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.level = 50L;
+        this.restaurantId = restaurantId;
     }
 }

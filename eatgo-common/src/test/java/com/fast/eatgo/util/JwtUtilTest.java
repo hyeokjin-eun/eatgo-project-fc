@@ -1,11 +1,8 @@
 package com.fast.eatgo.util;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
@@ -24,7 +21,7 @@ public class JwtUtilTest {
 
     @Test
     public void createToken() {
-        String token = jwtUtil.createToken(1L, "Test1");
+        String token = jwtUtil.createToken(1L, "Test1",null);
 
         assertThat(token, containsString("."));
     }
