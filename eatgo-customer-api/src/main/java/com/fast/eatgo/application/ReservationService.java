@@ -15,8 +15,9 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public Reservation addReservation(Long userId, String name, String date, String time, Integer partySize) {
+    public Reservation addReservation(Long restaurantId, Long userId, String name, String date, String time, Integer partySize) {
         Reservation reservation = Reservation.builder()
+                .restaurantId(restaurantId)
                 .userId(userId)
                 .name(name)
                 .date(date)
@@ -24,8 +25,6 @@ public class ReservationService {
                 .partySize(partySize)
                 .build();
 
-        Reservation newReservation = reservationRepository.save(reservation);
-
-        return newReservation;
+        return reservationRepository.save(reservation);
     }
 }

@@ -29,6 +29,7 @@ public class ReservationControllerTest {
 
     @Test
     public void created() throws Exception {
+        Long restaurantId = 1L;
         Long userId = 1L;
         String name = "Test1";
         String date = "2020-01-25";
@@ -36,6 +37,7 @@ public class ReservationControllerTest {
         Integer partySize = 5;
 
         Reservation reservation = Reservation.builder()
+                .restaurantId(restaurantId)
                 .userId(userId)
                 .name(name)
                 .date(date)
@@ -43,7 +45,7 @@ public class ReservationControllerTest {
                 .partySize(partySize)
                 .build();
 
-        given(reservationService.addReservation(userId, name, date, time, partySize)).willReturn(reservation);
+        given(reservationService.addReservation(restaurantId, userId, name, date, time, partySize)).willReturn(reservation);
 
         mvc.perform(post("/restaurant/1/reservation")
                 .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJUZXN0MSJ9.YKYvqkmiv5hWdGkREOqiELSWCzMQs7ABeQXbMTkyLMw")
@@ -51,6 +53,6 @@ public class ReservationControllerTest {
                 .content("{\"userId\":1,\"name\":\"Test1\",\"date\":\"2020-01-25\",\"time\":\"12:00\",\"partySize\":5}"))
                 .andExpect(status().isCreated());
 
-        verify(reservationService).addReservation(userId, name, date, time, partySize);
+        verify(reservationService).addReservation(restaurantId, userId, name, date, time, partySize);
     }
 }

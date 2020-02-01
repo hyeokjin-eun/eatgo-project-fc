@@ -31,7 +31,7 @@ public class ReservationController {
         String time = resource.getTime();
         Integer partySize = resource.getPartySize();
 
-        Reservation reservation = reservationService.addReservation(userId, name, date, time, partySize);
+        Reservation reservation = reservationService.addReservation(restaurantId, userId, name, date, time, partySize);
 
         return ResponseEntity
                 .created(new URI("/restaurant/" + restaurantId + "/reservation" + reservation.getId()))
