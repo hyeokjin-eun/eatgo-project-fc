@@ -34,7 +34,7 @@ public class ReservationController {
         Reservation reservation = reservationService.addReservation(userId, name, date, time, partySize);
 
         return ResponseEntity
-                .created(new URI("/restaurant/" + restaurantId + "/reservation"))
+                .created(new URI("/restaurant/" + restaurantId + "/reservation" + reservation.getId()))
                 .body(reservation);
     }
 }
