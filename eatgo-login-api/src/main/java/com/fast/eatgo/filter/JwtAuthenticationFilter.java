@@ -1,7 +1,6 @@
 package com.fast.eatgo.filter;
 
 import com.fast.eatgo.util.JwtUtil;
-import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
