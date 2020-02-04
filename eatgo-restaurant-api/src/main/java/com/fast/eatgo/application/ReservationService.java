@@ -19,6 +19,6 @@ public class ReservationService {
     }
 
     public List<Reservation> getReservations(Long restaurantId) {
-        return new ArrayList<>();
+        return reservationRepository.findAllByRestaurantId(restaurantId);
     }
 }
